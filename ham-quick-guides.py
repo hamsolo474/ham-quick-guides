@@ -18,7 +18,7 @@ def create_guides(theImage, tdrawable, hsplit=0, vsplit=0, make_centre=True):
     pdb.gimp_image_undo_group_end(theImage)
 
 register(
- "Ham Quick Guides", #Name
+ "Ham-Quick-Guides", #Name
     "", #Blurb
     "Create guides for rule of thirds/fourths etc..", #help
     "hamsolo474", #Author
