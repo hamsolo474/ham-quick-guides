@@ -1,6 +1,6 @@
 from gimpfu import *
 
-def create_guides(theImage, tdrawable, hsplit=0, vsplit=0, make_centre=True):
+def create_guides(theImage, tdrawable, hsplit=0, vsplit=0, make_centre=True, draw_borders=False):
     pdb.gimp_image_undo_group_start(theImage)
     vsplit = int(vsplit) # pf_adjustment returns floats
     hsplit = int(hsplit)
@@ -15,6 +15,13 @@ def create_guides(theImage, tdrawable, hsplit=0, vsplit=0, make_centre=True):
     if make_centre:        
         pdb.gimp_image_add_vguide(theImage, theImage.width/2)
         pdb.gimp_image_add_hguide(theImage, theImage.height/2)
+        
+    if draw_borders:
+        pdb.gimp_image_add_vguide(theImage, 0)
+        pdb.gimp_image_add_hguide(theImage, 0)
+        pdb.gimp_image_add_vguide(theImage, theImage.width)
+        pdb.gimp_image_add_hguide(theImage, theImage.height)
+        
     pdb.gimp_image_undo_group_end(theImage)
 
 register(
@@ -29,7 +36,8 @@ register(
     [ # Gui Params
         (PF_ADJUSTMENT, "hsplit", "Horizontal Splits", 3,(1,100,1)),
         (PF_ADJUSTMENT, "vsplit", "Vertical Splits", 3,(1,100,1)),
-        (PF_TOGGLE, "make_centre", "Draw centered guides", True)
+        (PF_TOGGLE, "make_centre", "Draw centered guides", True),
+        (PF_TOGGLE, "borders", "Draw guides on canvas borders", False)
     ],
     [], # Results
     create_guides) #function
